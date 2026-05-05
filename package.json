@@ -1,0 +1,44 @@
+﻿{
+  "name": "lyricsradar",
+  "version": "0.1.0",
+  "description": "Node.js library for synced lyrics search and parsing",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./genius": {
+      "types": "./dist/genius/index.d.ts",
+      "import": "./dist/genius/index.mjs",
+      "require": "./dist/genius/index.cjs"
+    },
+    "./ttml": {
+      "types": "./dist/ttml/index.d.ts",
+      "import": "./dist/ttml/index.mjs",
+      "require": "./dist/ttml/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "node --test test/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["lyrics", "ttml", "synced-lyrics", "genius"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "fast-xml-parser": "^4.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}
