@@ -1,41 +1,84 @@
-﻿export interface SyncedLyricsQuery {
-  title?: string;
-  song?: string;
-  songName?: string;
-  s?: string;
-  artist?: string;
-  artistName?: string;
-  a?: string;
-  album?: string;
-  albumName?: string;
-  al?: string;
-  duration?: number | string;
-  d?: number | string;
-  q?: string;
+import type { ParsedTTML } from '../ttml/types.js';
+import type { Lyric } from '@braccato/parsers';
+import type { GeniusClientOptions, GeniusLyrics, GeniusSongHit } from '../genius/types.js';
+import type {
+  SyncedLyricsQuery,
+  InternalProviderOptions,
+  SyncedLyricsRawResult,
+  LuminyLyricsQuery,
+  LuminyClientOptions,
+} from '../internal/types.js';
+
+export interface LyricsRadarOptions {
+  /** Optional Genius client options */
+  genius?: GeniusClientOptions;
+  /** Optional Luminy Lyrics options */
+  luminy?: LuminyClientOptions;
+  /** Global request timeout in ms */
+  timeoutMs?: number;
 }
 
 export interface SyncedLyricsResult {
+  /** Raw lyrics string (TTML XML, RichSync JSON, or LRC) */
+  rawXml?: string;
   raw?: string;
-  lyrics?: any[];
+  /** Parsed TTML structure with helpers (toLrc, toSrt, getLineAt, getWordAt) */
+  parsed?: ParsedTTML;
+  /** Braccato standard Lyric[] objects with parts and timestamps */
+  lyrics?: Lyric[];
+  /** LRC formatted synchronized string with proper word spacing */
   lrc?: string;
+  /** Clean plain text lyrics */
   plainText?: string;
+  /** Lyrics timing type ('Word' | 'Line' | 'None') */
   timing: 'Word' | 'Line' | 'None';
+  /** Whether the lyrics have word-by-word timestamps */
   hasWordSync: boolean;
+  /** Duration of the synced lyrics in milliseconds */
   durationMs: number;
-  track?: any;
+  /** Matched track info from Catalog */
+  track?: {
+    id?: string;
+    title?: string;
+    artists?: Array<{ id?: string; name: string }>;
+    durationMs?: number;
+    cover?: { url: string; width: number; height: number };
+  };
+  /** Raw candidate information */
+  best?: {
+    format?: string;
+    syncLevel?: string;
+    quality?: number;
+    content?: string;
+  };
 }
 
 export interface UnifiedLyricsResult {
+  /** Song title */
   title: string;
+  /** Artist name */
   artist: string;
+  /** Synced lyrics from Luminy (TTML / LRC + parsed) */
   synced?: SyncedLyricsResult;
-  genius?: any;
+  /** Braccato standard Lyric[] array */
+  lyrics?: Lyric[];
+  /** Genius lyrics and sections */
+  genius?: GeniusLyrics;
+  /** Best available plain text lyrics */
   plainText?: string;
+  /** Best available LRC synchronized format */
   lrc?: string;
+  /** Best available SRT subtitle format */
+  srt?: string;
+  /** Track information from metadata */
+  track?: SyncedLyricsResult['track'];
 }
 
-export interface LyricsRadarOptions {
-  genius?: any;
-  luminy?: any;
-  timeoutMs?: number;
-}
+export type {
+  SyncedLyricsQuery,
+  InternalProviderOptions,
+  SyncedLyricsRawResult,
+  LuminyLyricsQuery,
+  LuminyClientOptions,
+  Lyric,
+};
