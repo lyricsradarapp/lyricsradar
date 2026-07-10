@@ -1,7 +1,7 @@
-﻿{
+{
   "name": "lyricsradar",
-  "version": "0.1.0",
-  "description": "Node.js library for synced lyrics search and parsing",
+  "version": "1.0.0",
+  "description": "Lyrics search and parsing for Node.js: Apple-style TTML with word-sync, @braccato/parsers, and Genius.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -21,18 +21,36 @@
       "types": "./dist/ttml/index.d.ts",
       "import": "./dist/ttml/index.mjs",
       "require": "./dist/ttml/index.cjs"
+    },
+    "./parsers": {
+      "types": "./dist/parsers/index.d.ts",
+      "import": "./dist/parsers/index.mjs",
+      "require": "./dist/parsers/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "prebuilds"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "node --test test/*.test.js",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["lyrics", "ttml", "synced-lyrics", "genius"],
+  "keywords": [
+    "lyrics",
+    "ttml",
+    "synced-lyrics",
+    "genius",
+    "genius-api",
+    "lyrics-parser",
+    "word-sync",
+    "braccato"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@braccato/parsers": "^0.1.2",
     "cheerio": "^1.0.0",
     "fast-xml-parser": "^4.5.3"
   },
